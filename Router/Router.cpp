@@ -99,8 +99,8 @@ struct data_module
 	bool ProducingAll;
 	uint64_t StartTime = 0;
 	uint64_t StateChangedTime = 0;
-	byte State;
-	byte StateBeforeChange;
+	int State;
+	int StateBeforeChange;
 };
 
 struct admin_module
@@ -1250,11 +1250,51 @@ string ProcessCommand(string Command, admin_iter &WorkAdminIter)
 	{
 		Ans << endl << "CNT|" << PointsVector.size() << endl;
 	}
+	else if (ParsedCmd[0] == "state")
+	{
+		int redundant = 0;
+		string fillAdrr = "";
+
+		if (!ModuleList.empty())
+		{
+			int germ = 0, fill = 0;
+
+			for (auto m : ModuleList)
+			{
+				string s = m.ModuleName;
+				for (auto &c : s)
+					c = tolower(c);
+
+				const string GERM_NAME = "germinator";
+				const string FILL_NAME = "fillator";
+
+				if (germ == 0 && s.length() >= GERM_NAME.length() && s.substr(0, GERM_NAME.length()) == GERM_NAME)
+					germ = 1;
+
+				if (fill == 0 && s.length() >= FILL_NAME.length() && s.substr(0, FILL_NAME.length()) == FILL_NAME)
+				{
+					fill = 1;
+					fillAdrr = inet_ntoa(m.SockInfo.sin_addr);
+				}
+
+				if (fill && germ)
+				{
+					redundant = 1;
+					break;
+				}
+			}
+		}
+
+		Ans << endl << "STA|" << (PointsVector[0].PointValue[0] ? "1" : "0") << "|" << (redundant ? "1" : "0") << "|" << fillAdrr << endl;
+	}
 	else if (ParsedCmd[0] == "list")
 	{
 		if (ParsedCmd.size() < 2) ParsedCmd.push_back("*");
 		bool ByName = ((ParsedCmd.size() > 2) && (ParsedCmd[2] == "-n"));
 		bool ByRegex = ((ParsedCmd.size() > 2) && (ParsedCmd[2] == "-rgx"));
+		bool ByModule = ((ParsedCmd.size() > 3) && (ParsedCmd[2] == "-m")) ||
+			((ParsedCmd.size() > 4) && (ParsedCmd[3] == "-m"));
+		string ByModuleName = !ByModule ? "" : ((ParsedCmd[2] == "-m") ? ParsedCmd[3] : ParsedCmd[4]);
 		list<module_iter>::iterator TempModuleIter;
 		map_iter TempMapIter;
 		long long TempSigned = 0;
@@ -1272,6 +1312,32 @@ string ProcessCommand(string Command, admin_iter &WorkAdminIter)
 			if (!ByRegex && MatchesWildCard(ParsedCmd[1], PointsVector[index].PointName)
 				|| ByRegex && MatchesRegEx(ParsedCmd[1], PointsVector[index].PointName))
 			{
+				if (ByName)
+				{
+					bool isOut = true;
+					for (auto i : PointsVector[index].Consumer)
+					{
+						if (i->ModuleName == ByModuleName)
+						{
+							isOut = false;
+							break;
+						}
+					}
+
+					if (isOut)
+						for (auto i : PointsVector[index].Producer)
+						{
+							if (i->ModuleName == ByModuleName)
+							{
+								isOut = false;
+								break;
+							}
+						}
+
+					if (isOut)
+						continue;
+				}
+
 				Ans << index << "|" << PointsVector[index].PointName << "|" << int(PointsVector[index].PointQuality) << "|" << int(PointsVector[index].PointType) << "|" << (PointsVector[index].Forced ? "f" : "n") << endl;
 				switch (PointsVector[index].PointType)
 				{

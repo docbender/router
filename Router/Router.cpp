@@ -2133,6 +2133,8 @@ int ServiceMain(int argc, char** argv)
 					TempModule.StartTime = getNow();
 					TempModule.StateChangedTime = TempModule.StartTime;
 					TempModule.State = STATE_MODULE_CONNECTED;
+					if(PointsVector[0].PointValue[0] == 1)
+						TempModule.State |= STATE_MODULE_ACTIVE;
 					TempModule.StateBeforeChange = 0;
 					ModuleList.push_back(TempModule);
 					*msg_out << ReportHead() << "New module connected." << endl;

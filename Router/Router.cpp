@@ -61,21 +61,17 @@
 #define STATE_MODULE_ACTIVE 0x1
 #define STATE_MODULE_CONNECTED 0x2
 
-#include <winsock2.h>
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 
+#include <winsock2.h>
 #include <iostream>
 #include <list>
 #include <vector>
 #include <map>
 #include <comdef.h>
-//#include <tchar.h>
 #include <sstream>
 #include <fstream>
 #include <iomanip>
-//#include <ctime>
-//#include <windows.h>
-//#include <stdio.h>
-//#include "myaes.h"
 #include <regex>
 
 //#pragma comment (lib, "cppauth")
@@ -178,7 +174,7 @@ void Init()
 	NewPoint.Forced = false;
 	NewPoint.LastChangedBy = ModuleList.end();
 	PointsVector.push_back(NewPoint);
-	PointsMap.insert(pair<string, int>(NewPoint.PointName, PointsVector.size() - 1));
+	PointsMap.insert(pair<string, unsigned int>(NewPoint.PointName, PointsVector.size() - 1));
 
 	NewPoint.PointName = "$TestINT8";
 	NewPoint.PointQuality = 255;
@@ -187,7 +183,7 @@ void Init()
 	NewPoint.Forced = false;
 	NewPoint.LastChangedBy = ModuleList.end();
 	PointsVector.push_back(NewPoint);
-	PointsMap.insert(pair<string, int>(NewPoint.PointName, PointsVector.size() - 1));
+	PointsMap.insert(pair<string, unsigned int>(NewPoint.PointName, PointsVector.size() - 1));
 
 	NewPoint.PointName = "$TestUINT8";
 	NewPoint.PointQuality = 255;
@@ -196,7 +192,7 @@ void Init()
 	NewPoint.Forced = false;
 	NewPoint.LastChangedBy = ModuleList.end();
 	PointsVector.push_back(NewPoint);
-	PointsMap.insert(pair<string, int>(NewPoint.PointName, PointsVector.size() - 1));
+	PointsMap.insert(pair<string, unsigned int>(NewPoint.PointName, PointsVector.size() - 1));
 
 	NewPoint.PointName = "$TestINT16";
 	NewPoint.PointQuality = 255;
@@ -205,7 +201,7 @@ void Init()
 	NewPoint.Forced = false;
 	NewPoint.LastChangedBy = ModuleList.end();
 	PointsVector.push_back(NewPoint);
-	PointsMap.insert(pair<string, int>(NewPoint.PointName, PointsVector.size() - 1));
+	PointsMap.insert(pair<string, unsigned int>(NewPoint.PointName, PointsVector.size() - 1));
 
 	NewPoint.PointName = "$TestUINT16";
 	NewPoint.PointQuality = 255;
@@ -214,7 +210,7 @@ void Init()
 	NewPoint.Forced = false;
 	NewPoint.LastChangedBy = ModuleList.end();
 	PointsVector.push_back(NewPoint);
-	PointsMap.insert(pair<string, int>(NewPoint.PointName, PointsVector.size() - 1));
+	PointsMap.insert(pair<string, unsigned int>(NewPoint.PointName, PointsVector.size() - 1));
 
 	NewPoint.PointName = "$TestINT32";
 	NewPoint.PointQuality = 255;
@@ -223,7 +219,7 @@ void Init()
 	NewPoint.Forced = false;
 	NewPoint.LastChangedBy = ModuleList.end();
 	PointsVector.push_back(NewPoint);
-	PointsMap.insert(pair<string, int>(NewPoint.PointName, PointsVector.size() - 1));
+	PointsMap.insert(pair<string, unsigned int>(NewPoint.PointName, PointsVector.size() - 1));
 
 	NewPoint.PointName = "$TestUINT32";
 	NewPoint.PointQuality = 255;
@@ -232,7 +228,7 @@ void Init()
 	NewPoint.Forced = false;
 	NewPoint.LastChangedBy = ModuleList.end();
 	PointsVector.push_back(NewPoint);
-	PointsMap.insert(pair<string, int>(NewPoint.PointName, PointsVector.size() - 1));
+	PointsMap.insert(pair<string, unsigned int>(NewPoint.PointName, PointsVector.size() - 1));
 
 	NewPoint.PointName = "$TestINT64";
 	NewPoint.PointQuality = 255;
@@ -241,7 +237,7 @@ void Init()
 	NewPoint.Forced = false;
 	NewPoint.LastChangedBy = ModuleList.end();
 	PointsVector.push_back(NewPoint);
-	PointsMap.insert(pair<string, int>(NewPoint.PointName, PointsVector.size() - 1));
+	PointsMap.insert(pair<string, unsigned int>(NewPoint.PointName, PointsVector.size() - 1));
 
 	NewPoint.PointName = "$TestUINT64";
 	NewPoint.PointQuality = 255;
@@ -250,7 +246,7 @@ void Init()
 	NewPoint.Forced = false;
 	NewPoint.LastChangedBy = ModuleList.end();
 	PointsVector.push_back(NewPoint);
-	PointsMap.insert(pair<string, int>(NewPoint.PointName, PointsVector.size() - 1));
+	PointsMap.insert(pair<string, unsigned int>(NewPoint.PointName, PointsVector.size() - 1));
 
 	NewPoint.PointName = "$TestFLOAT";
 	NewPoint.PointQuality = 255;
@@ -259,7 +255,7 @@ void Init()
 	NewPoint.Forced = false;
 	NewPoint.LastChangedBy = ModuleList.end();
 	PointsVector.push_back(NewPoint);
-	PointsMap.insert(pair<string, int>(NewPoint.PointName, PointsVector.size() - 1));
+	PointsMap.insert(pair<string, unsigned int>(NewPoint.PointName, PointsVector.size() - 1));
 
 	NewPoint.PointName = "$TestDOUBLE";
 	NewPoint.PointQuality = 255;
@@ -268,7 +264,7 @@ void Init()
 	NewPoint.Forced = false;
 	NewPoint.LastChangedBy = ModuleList.end();
 	PointsVector.push_back(NewPoint);
-	PointsMap.insert(pair<string, int>(NewPoint.PointName, PointsVector.size() - 1));
+	PointsMap.insert(pair<string, unsigned int>(NewPoint.PointName, PointsVector.size() - 1));
 
 	NewPoint.PointName = "$TestString";
 	NewPoint.PointQuality = 255;
@@ -277,7 +273,7 @@ void Init()
 	NewPoint.Forced = false;
 	NewPoint.LastChangedBy = ModuleList.end();
 	PointsVector.push_back(NewPoint);
-	PointsMap.insert(pair<string, int>(NewPoint.PointName, PointsVector.size() - 1));
+	PointsMap.insert(pair<string, unsigned int>(NewPoint.PointName, PointsVector.size() - 1));
 
 	NewPoint.PointName = "$TestStream";
 	NewPoint.PointQuality = 255;
@@ -286,7 +282,7 @@ void Init()
 	NewPoint.Forced = false;
 	NewPoint.LastChangedBy = ModuleList.end();
 	PointsVector.push_back(NewPoint);
-	PointsMap.insert(pair<string, int>(NewPoint.PointName, PointsVector.size() - 1));
+	PointsMap.insert(pair<string, unsigned int>(NewPoint.PointName, PointsVector.size() - 1));
 
 	NewPoint.PointName = "$TestXML";
 	NewPoint.PointQuality = 255;
@@ -295,7 +291,7 @@ void Init()
 	NewPoint.Forced = false;
 	NewPoint.LastChangedBy = ModuleList.end();
 	PointsVector.push_back(NewPoint);
-	PointsMap.insert(pair<string, int>(NewPoint.PointName, PointsVector.size() - 1));
+	PointsMap.insert(pair<string, unsigned int>(NewPoint.PointName, PointsVector.size() - 1));
 
 	NewPoint.PointName = "$TestBase64";
 	NewPoint.PointQuality = 255;
@@ -304,7 +300,7 @@ void Init()
 	NewPoint.Forced = false;
 	NewPoint.LastChangedBy = ModuleList.end();
 	PointsVector.push_back(NewPoint);
-	PointsMap.insert(pair<string, int>(NewPoint.PointName, PointsVector.size() - 1));
+	PointsMap.insert(pair<string, unsigned int>(NewPoint.PointName, PointsVector.size() - 1));
 }
 
 uint64_t getNow()
@@ -426,7 +422,7 @@ void FinishNewMessage(module_iter WorkModuleIter)
 	}
 	else
 	{
-		unsigned int MsgSize = WorkModuleIter->WriteBuffer.size() - WorkModuleIter->LastMessagePos - MSG_HEAD_SIZE;
+		uint32_t MsgSize = WorkModuleIter->WriteBuffer.size() - WorkModuleIter->LastMessagePos - MSG_HEAD_SIZE;
 		WorkModuleIter->WriteBuffer.replace(WorkModuleIter->LastMessagePos + MSG_LENGTH_POS, 4, (char *)&MsgSize, 4);
 		WorkModuleIter->WriteBuffer += MSG_END;
 		WorkModuleIter->LastMessagePos = 0xFFFFFFFF;
@@ -544,7 +540,7 @@ unsigned int AddConsumerProducer(module_iter WorkModuleIter, string PointName, b
 		NewPoint.LastChangedBy = ModuleList.end();
 		PointsVector.push_back(NewPoint);
 		PointIndex = PointsVector.size() - 1;
-		PointsMapIterator = PointsMap.insert(pair<string, int>(PointName, PointIndex)).first;
+		PointsMapIterator = PointsMap.insert(pair<string, unsigned int>(PointName, PointIndex)).first;
 		for (ModuleListIter = ModuleList.begin(); ModuleListIter != ModuleList.end(); ++ModuleListIter)
 			if ((ModuleListIter != WorkModuleIter) && ((ModuleListIter->ConsumingAll) || (ModuleListIter->ProducingAll)))
 			{
@@ -1338,7 +1334,13 @@ string ProcessCommand(string Command, admin_iter &WorkAdminIter)
 						continue;
 				}
 
-				Ans << index << "|" << PointsVector[index].PointName << "|" << int(PointsVector[index].PointQuality) << "|" << int(PointsVector[index].PointType) << "|" << (PointsVector[index].Forced ? "f" : "n") << endl;
+				Ans << index << "|" << PointsVector[index].PointName << "|" << int(PointsVector[index].PointQuality) << "|" << int(PointsVector[index].PointType) << "|" << (PointsVector[index].Forced ? "f" : "n");
+				
+				if((supportAdminThisVersion(WorkAdminIter, "1.17")))
+					Ans << "|" << PointsVector[index].Changed << endl;
+				else
+					Ans << endl;
+
 				switch (PointsVector[index].PointType)
 				{
 				case POINTTYPE_NONE:
@@ -1627,7 +1629,7 @@ string ProcessCommand(string Command, admin_iter &WorkAdminIter)
 					{
 						PointsMap.erase(PointsVector[index].PointName);
 						PointsVector[index].PointName = ParsedCmd[3];
-						PointsMap.insert(pair<string, int>(ParsedCmd[3], index));
+						PointsMap.insert(pair<string, unsigned int>(ParsedCmd[3], index));
 						Ans << "ACK set" << endl;
 					}
 					else

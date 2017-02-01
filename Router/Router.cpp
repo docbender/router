@@ -1299,6 +1299,22 @@ string ProcessCommand(string Command, admin_iter &WorkAdminIter)
 		double TempDouble = 0;
 		unsigned int index;
 		unsigned int TempSeq;
+		regex *pattern;
+
+		if (ByRegex)
+		{
+			try
+			{
+				pattern = new regex(ParsedCmd[1]);
+				regex_match("", *pattern);
+			}
+			catch(regex_error& e)
+			{
+				Ans << "ERROR: bad regular expression" << endl;
+
+				return Ans.str();
+			}
+		}
 
 		Ans << endl << "PNT|";
 		for (TempMapIter = PointsMap.begin(), TempSeq = 0; TempSeq < PointsVector.size(); ++TempSeq, ++TempMapIter)
@@ -1306,7 +1322,7 @@ string ProcessCommand(string Command, admin_iter &WorkAdminIter)
 			index = (ByName ? TempMapIter->second : TempSeq);
 
 			if (!ByRegex && MatchesWildCard(ParsedCmd[1], PointsVector[index].PointName)
-				|| ByRegex && MatchesRegEx(ParsedCmd[1], PointsVector[index].PointName))
+				|| ByRegex && regex_match(PointsVector[index].PointName, *pattern))
 			{
 				if (ByName)
 				{
